@@ -4,6 +4,9 @@
     "parameters": {
         "templateUrl": {
             "value": "https://raw.githubusercontent.com/bartex/architecting-azure/master/tydzien3/linkedtemp"
+        },
+        "vnetTemplateName": {
+            "value": "vnet.json"
         }
     }
 }

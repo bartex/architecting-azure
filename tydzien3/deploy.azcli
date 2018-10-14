@@ -1,0 +1,6 @@
+# Visual Studio Code development
+# Install: Azure CLI Tools
+# JSON snippets: https://github.com/Azure/azure-xplat-arm-tooling/blob/master/VSCode/armsnippets.json  (File -> Preferences -> User Snippets -> JSON)
+az group create -l westeurope --name rg-cloudcourses-acme-westeurope-rg01
+
+az group deployment create -g rg-cloudcourses-acme-westeurope-rg01 --template-file armhomework.json --parameters @armhomework.parameters.json

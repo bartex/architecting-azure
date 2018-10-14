@@ -7,26 +7,32 @@
            "metadata": {
                 "description": "Linked templates URL"
             }
+        },
+        "vnetTemplateName": {
+           "type": "string",
+           "metadata": {
+                "description": "Vnet JSON linked template name"
+            }
         }
     },
     "variables": {
-        
+        "clientName": "acme",
+        "vnetName": "vnet01"
     },
     "resources": [
         {
-            "name": "Vnet01",
+            "name": "[variables('vnetName')]",
             "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2015-01-01",
-            "tags": {
-                "displayName": "Vnet01"
-            },
+            "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templateUrl'), '/linkedtemp/${NestedTemplate.json}')]",
+                    "uri": "[concat(parameters('templateUrl'), '/linkedtemp/', parameters('vnetTemplateName'))]",
                     "contentVersion": "1.0.0.0"
                 },
-                "parameters": {}
+                "parameters": {
+                    "vnetNameOrig": "[concat('vnet', '-', variables('clientName'), '-', resourceGroup().location, '-', variables('vnetName'))]"
+                }
             }
         }
     ],

@@ -1,1 +1,0 @@
-az group create -l westeurope --name rg-cloudcourses-acme-westeurope-rg01
