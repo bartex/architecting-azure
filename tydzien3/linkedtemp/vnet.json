@@ -1,0 +1,30 @@
+{
+    "apiVersion": "2015-06-15",
+    "type": "Microsoft.Network/virtualNetworks",
+    "name": "net-acme-westeurope-vnet01",
+    "location": "[resourceGroup().location]",
+    "tags": {
+        "displayName": "net-acme-westeurope-vnet01"
+    },
+    "properties": {
+        "addressSpace": {
+            "addressPrefixes": [
+                "10.0.0.0/16"
+            ]
+        },
+        "subnets": [
+            {
+                "name": "Subnet-1",
+                "properties": {
+                    "addressPrefix": "10.0.0.0/24"
+                }
+            },
+            {
+                "name": "Subnet-2",
+                "properties": {
+                    "addressPrefix": "10.0.1.0/24"
+                }
+            }
+        ]
+    }
+}
