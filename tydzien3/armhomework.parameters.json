@@ -1,7 +1,9 @@
 {
     "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
     "contentVersion": "1.0.0.0",
-    "parameterName": {
-        "templateUrl": "https://github.com/bartex/architecting-azure/tydzien3"
+    "parameters": {
+        "templateUrl": {
+            "value": "https://raw.githubusercontent.com/bartex/architecting-azure/master/tydzien3/linkedtemp"
+        }
     }
 }
