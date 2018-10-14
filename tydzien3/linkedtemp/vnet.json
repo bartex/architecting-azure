@@ -9,7 +9,15 @@
             "metadata": {
               "description": "Virtual network name."
             }
-          }
+          },
+        "nsgroupName": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 2,
+            "metadata": {
+              "description": "Network security group name."
+            }
+        }
     },
     "variables": {
         "vnetAddressPrefix": "10.0.0.0/16",
@@ -34,13 +42,19 @@
                     {
                         "name": "[variables('subnet1Name')]",
                         "properties": {
-                            "addressPrefix": "[variables('subnet1Prefix')]"
+                            "addressPrefix": "[variables('subnet1Prefix')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups/', parameters('nsgroupName'))]"
+                            }
                         }
                     },
                     {
                         "name": "[variables('subnet2Name')]",
                         "properties": {
-                            "addressPrefix": "[variables('subnet2Prefix')]"
+                            "addressPrefix": "[variables('subnet2Prefix')]",
+                            "networkSecurityGroup" : {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups/', parameters('nsgroupName'))]"
+                            }
                         }
                     }
                 ]

@@ -13,25 +13,57 @@
            "metadata": {
                 "description": "Vnet JSON linked template name"
             }
+        },
+        "nsgTemplateName": {
+           "type": "string",
+           "metadata": {
+                "description": "NSG Json linked template name"
+            }
         }
     },
     "variables": {
         "clientName": "acme",
-        "vnetName": "vnet01"
+        "vnetName": "vnet01",
+        "nsgName": "nsg"
     },
     "resources": [
         {
-            "name": "[variables('vnetName')]",
+            "name": "[variables('nsgName')]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(parameters('templateUrl'), '/linkedtemp/', parameters('vnetTemplateName'))]",
+                    "uri": "[concat(parameters('templateUrl'), parameters('nsgTemplateName'))]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "vnetNameOrig": "[concat('vnet', '-', variables('clientName'), '-', resourceGroup().location, '-', variables('vnetName'))]"
+                    "nsgNameOrig": {
+                        "value": "[concat('nsg', '-', variables('clientName'), '-', resourceGroup().location, '_', 'allow_ssh')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('vnetName')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "dependsOn": [
+                "[variables('nsgName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('templateUrl'), parameters('vnetTemplateName'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vnetNameOrig": {
+                        "value": "[concat('vnet', '-', variables('clientName'), '-', resourceGroup().location, '-', variables('vnetName'))]"
+                    },
+                    "nsgroupName": {
+                        "value": "[reference(variables('nsgName')).outputs.nsgOutName.value]"
+                    }
                 }
             }
         }

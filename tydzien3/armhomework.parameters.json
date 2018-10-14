@@ -3,10 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "templateUrl": {
-            "value": "https://raw.githubusercontent.com/bartex/architecting-azure/master/tydzien3/linkedtemp"
+            "value": "https://raw.githubusercontent.com/bartex/architecting-azure/master/tydzien3/linkedtemp/"
         },
         "vnetTemplateName": {
             "value": "vnet.json"
+        },
+        "nsgTemplateName": {
+            "value": "nsg.json"
         }
     }
 }
