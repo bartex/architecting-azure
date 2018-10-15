@@ -1,12 +1,37 @@
-# Visual Studio Code development
-# Install: Azure CLI Tools
-# JSON snippets: https://github.com/Azure/azure-xplat-arm-tooling/blob/master/VSCode/armsnippets.json  (File -> Preferences -> User Snippets -> JSON)
+#### Create resource group and resources
+# tydzien3.2
 az group create -l westeurope --name rg-cloudcourses-acme-westeurope-rg01
 
 az group deployment create -g rg-cloudcourses-acme-westeurope-rg01 --template-file armhomework.json --parameters @armhomework.parameters.json
 
 #####
+# tydzien3.3
+az role definition create --role-definition '
+{
+    "Name": "customrbac",
+    "Description": "Perform VM roles and write support tickets",
+    "Actions": [
+      "Microsoft.Compute/virtualMachines/start/action",
+      "Microsoft.Compute/virtualMachines/powerOff/action",
+      "Microsoft.Support/supportTickets/write"
+    ],
+    "NotActions": [
 
+    ],
+    "AssignableScopes": [
+      "/subscriptions/687cfe37-45b6-41b6-9f13-ca30f0894dd9"
+    ]
+}
+'
+
+#####
+# tydzien 3.4
+# referencja do key vaulta w armhomework.parameters.json
+
+
+#### Just for deleting
 az group delete -n rg-cloudcourses-acme-westeurope-rg01
 
 az group deployment delete --name armhoework --resource-group rg-cloudcourses-acme-westeurope-rg01
+
+az role definition delete --name "customrbac"

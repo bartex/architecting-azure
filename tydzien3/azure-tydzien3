@@ -1,7 +1,6 @@
 #tydzien3.1 - Grupa Zasobów, VNET, Maszyn Wirtualna, Dysk, Konta składowania danych
 organization: acme
 project: cloudcourses
-label/version: v1-0-0
 
 resource group: rg-cloudcourses-acme-westeurope-rg01
 vnet: vnet-acme-westeurope-vnet01
@@ -12,3 +11,5 @@ nsg: nsg-acme-westeurope_allow_ssh
 
 public ip: vm-acme-ubuntu01-ip
 nsg: vm-acme-ubuntu01-nsg
+
+etc.

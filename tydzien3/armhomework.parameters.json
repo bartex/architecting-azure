@@ -13,6 +13,22 @@
         },
         "vmTemplateName": {
             "value": "vm.json"
+        },
+        "adminLogin": {
+            "reference": {
+                "keyVault": {
+                  "id": "/subscriptions/<subscription-id>/resourceGroups/rg-cloudcourses-acme-westeurope-rg01/providers/Microsoft.KeyVault/vaults/kv-acme-cloudcourses"
+                },
+                "secretName": "adminusr"
+              }
+        },
+        "adminSecretPassword": {
+            "reference": {
+              "keyVault": {
+                "id": "/subscriptions/<subscription-id>resourceGroups/rg-cloudcourses-acme-westeurope-rg01/providers/Microsoft.KeyVault/vaults/kv-acme-cloudcourses"
+              },
+              "secretName": "adminpwd"
+            }
         }
     }
 }

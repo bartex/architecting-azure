@@ -16,7 +16,7 @@
         },
         "suffix": {
             "type": "string"
-        },
+        }
     },
     "variables": {
         "vmName": "[concat(parameters('vmNameOrig'), parameters('suffix'))]",
