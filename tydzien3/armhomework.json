@@ -25,14 +25,25 @@
            "metadata": {
                 "description": "VirtualMachine Json linked template"
             }
+        },
+        "adminLogin": {
+            "type": "string",
+            "metadata": {
+                 "description": "KV admin login"
+             }
+        },
+        "adminSecretPassword": {
+            "type": "securestring",
+            "metadata": {
+                 "description": "KV admin pwd"
+             }
         }
     },
     "variables": {
         "clientName": "acme",
         "vnetName": "vnet01",
         "nsgName": "nsg",
-        "vmName": "ubuntu",
-        "nicName": "vm"
+        "vmName": "ubuntu"
     },
     "resources": [
         {
@@ -76,7 +87,7 @@
             }
         },
         {
-            "name": "[concat(variables('vmName'), '01')]",
+            "name": "[concat(variables('vmName'), copyIndex(1))]",
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2017-05-10",
             "dependsOn": [
@@ -89,43 +100,26 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "suffix": {
-                        "value": "01"
+                    "adminUser": {
+                        "value": "[parameters('adminLogin')]"
+                    },
+                    "adminPassword": {
+                        "value": "[parameters('adminSecretPassword')]"
                     },
                     "vmNameOrig": {
                         "value": "[concat('vm', '-', variables('clientName'), '-', resourceGroup().location, '-', variables('vmName'))]"
                     },
                     "subnetRef": {
-                        "value": "[reference(variables('vnetName')).outputs.subnetRef1.value]"
-                    }
-
-                }
-            }
-        },
-        {
-            "name": "[concat(variables('vmName'), '02')]",
-            "type": "Microsoft.Resources/deployments",
-            "apiVersion": "2017-05-10",
-            "dependsOn": [
-                "[variables('vnetName')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[concat(parameters('templateUrl'), parameters('vmTemplateName'))]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
+                        "value": "[reference(variables('vnetName')).outputs.subnetsRefs.value[copyIndex()]]"
+                    },
                     "suffix": {
-                        "value": "02"
-                    },
-                    "vmNameOrig": {
-                        "value": "[concat('vm', '-', variables('clientName'), '-', resourceGroup().location, '-', variables('vmName'))]"
-                    },
-                    "subnetRef": {
-                        "value": "[reference(variables('vnetName')).outputs.subnetRef2.value]"
+                        "value": "[concat(copyIndex(1))]"
                     }
                 }
+            },
+            "copy": {
+                "name": "vmcopy",
+                "count": 2
             }
         }
     ],

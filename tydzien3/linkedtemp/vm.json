@@ -2,35 +2,31 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "suffix": {
+        "adminUser": {
             "type": "string"
+        },
+        "adminPassword": {
+            "type": "securestring"
         },
         "vmNameOrig": {
             "type": "string"
         },
         "subnetRef": {
             "type": "string"
-        }
+        },
+        "suffix": {
+            "type": "string"
+        },
     },
     "variables": {
         "vmName": "[concat(parameters('vmNameOrig'), parameters('suffix'))]",
-        "storageName": "[concat(variables('vmName'), 'osdisk', parameters('suffix'))]",
         "nicName": "[concat('nic', parameters('suffix'))]",
-        "adminUsername": "Administrator",
-        "adminPassword": "P$$$wOrD",
-        "publicIpAddressName": "[concat('publicIp', parameters('suffix'))]"
+        "adminUsername": "[parameters('adminUser')]",
+        "adminPassword": "[parameters('adminPassword')]",
+        "publicIpAddressName": "[concat('publicIp', parameters('suffix'))]",
+        "dnsName": "[resourceGroup().name]"
     },
     "resources": [
-        {
-            "type": "Microsoft.Storage/storageAccounts",
-            "name": "[variables('storageName')]",
-            "apiVersion": "2016-01-01",
-            "location": "[resourceGroup().location]",
-            "sku": {
-                "name": "Standard_LRS"
-            },
-            "kind": "Storage"
-        },
         {
             "apiVersion": "2016-03-30",
             "type": "Microsoft.Network/publicIPAddresses",
@@ -39,7 +35,7 @@
             "properties": {
                 "publicIPAllocationMethod": "Dynamic",
                 "dnsSettings": {
-                    "domainNameLabel": "[concat('resourceGroup().name', '-', 'dns', parameters('suffix'))]"
+                    "domainNameLabel": "[concat(variables('dnsName'), 'dns', parameters('suffix'))]"
                 }
             }
         },
@@ -74,7 +70,6 @@
             "name": "[variables('vmName')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageName'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
             ],
             "properties": {
@@ -94,18 +89,8 @@
                       "version": "latest"
                     },
                     "osDisk": {
-                      "createOption": "FromImage"
-                    },
-                    "dataDisks": [
-                      {
-                        "diskSizeGB": 1023,
-                        "lun": 0,
-                        "createOption": "Empty"
-                      }
-                    ]
-                },
-                "osDisk": {
-                    "createOption": "FromImage"
+                          "createOption": "FromImage"
+                    }
                 },
                 "networkProfile": {
                     "networkInterfaces": [

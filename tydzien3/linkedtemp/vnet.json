@@ -62,14 +62,12 @@
         }
     ],
     "outputs": {
-        "subnetRef1": {
-            "type": "string",
-            "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetNameOrig'), variables('subnet1Name'))]"
-        },
-        "subnetRef2": {
-            "type": "string",
-            "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetNameOrig'), variables('subnet2Name'))]"
+        "subnetsRefs": {
+            "type": "array",
+            "value": [
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetNameOrig'), variables('subnet1Name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetNameOrig'), variables('subnet2Name'))]"
+            ]
         }
-
     }
 }

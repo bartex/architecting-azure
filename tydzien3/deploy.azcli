@@ -5,5 +5,8 @@ az group create -l westeurope --name rg-cloudcourses-acme-westeurope-rg01
 
 az group deployment create -g rg-cloudcourses-acme-westeurope-rg01 --template-file armhomework.json --parameters @armhomework.parameters.json
 
-# az group delete -n rg-cloudcourses-acme-westeurope-rg01
-# az group deployment delete --name armhoework --resource-group rg-cloudcourses-acme-westeurope-rg01
+#####
+
+az group delete -n rg-cloudcourses-acme-westeurope-rg01
+
+az group deployment delete --name armhoework --resource-group rg-cloudcourses-acme-westeurope-rg01
