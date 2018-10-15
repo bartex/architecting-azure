@@ -60,5 +60,16 @@
                 ]
             }
         }
-    ]
+    ],
+    "outputs": {
+        "subnetRef1": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetNameOrig'), variables('subnet1Name'))]"
+        },
+        "subnetRef2": {
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets/', parameters('vnetNameOrig'), variables('subnet2Name'))]"
+        }
+
+    }
 }

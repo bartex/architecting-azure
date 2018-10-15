@@ -10,6 +10,9 @@
         },
         "nsgTemplateName": {
             "value": "nsg.json"
+        },
+        "vmTemplateName": {
+            "value": "vm.json"
         }
     }
 }

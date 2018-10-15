@@ -11,20 +11,28 @@
         "vnetTemplateName": {
            "type": "string",
            "metadata": {
-                "description": "Vnet JSON linked template name"
+                "description": "Vnet JSON linked template"
             }
         },
         "nsgTemplateName": {
            "type": "string",
            "metadata": {
-                "description": "NSG Json linked template name"
+                "description": "NSG Json linked template"
+            }
+        },
+        "vmTemplateName": {
+           "type": "string",
+           "metadata": {
+                "description": "VirtualMachine Json linked template"
             }
         }
     },
     "variables": {
         "clientName": "acme",
         "vnetName": "vnet01",
-        "nsgName": "nsg"
+        "nsgName": "nsg",
+        "vmName": "ubuntu",
+        "nicName": "vm"
     },
     "resources": [
         {
@@ -63,6 +71,59 @@
                     },
                     "nsgroupName": {
                         "value": "[reference(variables('nsgName')).outputs.nsgOutName.value]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(variables('vmName'), '01')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "dependsOn": [
+                "[variables('vnetName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('templateUrl'), parameters('vmTemplateName'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "suffix": {
+                        "value": "01"
+                    },
+                    "vmNameOrig": {
+                        "value": "[concat('vm', '-', variables('clientName'), '-', resourceGroup().location, '-', variables('vmName'))]"
+                    },
+                    "subnetRef": {
+                        "value": "[reference(variables('vnetName')).outputs.subnetRef1.value]"
+                    }
+
+                }
+            }
+        },
+        {
+            "name": "[concat(variables('vmName'), '02')]",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2017-05-10",
+            "dependsOn": [
+                "[variables('vnetName')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('templateUrl'), parameters('vmTemplateName'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "suffix": {
+                        "value": "02"
+                    },
+                    "vmNameOrig": {
+                        "value": "[concat('vm', '-', variables('clientName'), '-', resourceGroup().location, '-', variables('vmName'))]"
+                    },
+                    "subnetRef": {
+                        "value": "[reference(variables('vnetName')).outputs.subnetRef2.value]"
                     }
                 }
             }
