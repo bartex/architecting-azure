@@ -13,3 +13,9 @@ nsg: nsg-acme-westeurope_allow_ssh
 
 public ip: vm-acme-ubuntu01-ip
 nsg: vm-acme-ubuntu01-nsg
+
+
+##tydzien6.3 - Serverless fun :)
+Azure Functions
+Storage Queues
+Azure API Management
